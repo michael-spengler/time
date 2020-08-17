@@ -16,6 +16,24 @@ export class TimeService {
         return result.substr(11, 8)
     }
 
+    public static async getTimeByTimeZone(timeZone: string): Promise<string> {
+
+        const allTimeZones = JSON.parse(await Persistence.readFromLocalFile(`${Deno.cwd()}/timezones.json`))
+
+        const entry = allTimeZones.filter((e: any) => e.timezone === timeZone)[0]
+
+        const minutes = Number(TimeService.convertOffsetToMinutes(entry.dayLightSavingTimeOffset).toString())
+
+        log.warning(minutes)
+        let getDifferenceToUtcInMilisec = minutes * 60000;
+        let getUTCMilisecond = new Date().getTime();
+
+        const result = new Date(getUTCMilisecond - getDifferenceToUtcInMilisec).toISOString()
+
+
+        return result.substr(11, 8)
+    }
+
     public static async getTimeZone(countryCode: string, cityName: string): Promise<string> {
 
         const entry = await TimeService.getTimeZoneEntry(countryCode, cityName)
@@ -54,9 +72,8 @@ export class TimeService {
     }
 
     private static async getTimeZoneEntry(countryCode: string, cityName: string): Promise<any> {
-        const myPath = `${Deno.cwd()}/timezones.json`
-        const allTimeZones = JSON.parse(await Persistence.readFromLocalFile(myPath))
 
+        const allTimeZones = JSON.parse(await Persistence.readFromLocalFile(`${Deno.cwd()}/timezones.json`))
 
         const entry = allTimeZones.filter((e: any) => e.iso2 === countryCode && (e.city === cityName || e.city_ascii === cityName))[0]
         if (entry === undefined) {
@@ -65,5 +82,4 @@ export class TimeService {
 
         return entry
     }
-
 }

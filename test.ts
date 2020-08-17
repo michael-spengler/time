@@ -28,6 +28,17 @@ Deno.test("get time", async (): Promise<void> => {
     assertEquals(time.length, 8)
 });
 
+Deno.test("get time by timezone", async (): Promise<void> => {
+    
+    const timeZone = 'Europe/Berlin'
+
+    const time = await TimeService.getTimeByTimeZone(timeZone)
+
+    log.info(`In ${timeZone} it is ${time} o'Clock :)`)
+
+    assertEquals(time.length, 8)
+});
+
 
 Deno.test("get offset", async (): Promise<void> => {
     
