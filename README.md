@@ -26,7 +26,7 @@ log.info(`The time in ${cityName} (${countryCode}) is ${time}`)
 
 ```sh 
    
-deno test test.ts --allow-read
+deno test --allow-read https://deno.land/x/time/test.ts
   
    
 ```

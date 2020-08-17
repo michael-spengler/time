@@ -48,7 +48,6 @@ export class TimeService {
         const hours = Number(offsetString.substr(1, 2))
         const minutes = Number(offsetString.substr(4, 2))
         const complete = (hours * 60) + (minutes)
-        log.error(preFix)
         if (preFix === '+') {
             return complete * -1
         }
