@@ -16,12 +16,12 @@ Deno.test("get timezone", async (): Promise<void> => {
 });
 
 
-Deno.test("get time", async (): Promise<void> => {
+Deno.test("get time by country and city", async (): Promise<void> => {
     
     const countryCode = 'DE'
     const cityName = 'Heidelberg'
 
-    const time = await TimeService.getTime(countryCode, cityName)
+    const time = await TimeService.getTimeByCountryAndCity(countryCode, cityName)
 
     log.info(`In ${cityName} (${countryCode}) it is ${time} o'Clock :)`)
 

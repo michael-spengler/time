@@ -3,9 +3,26 @@ import * as log from "https://deno.land/std/log/mod.ts";
 
 export class TimeService {
 
-    public static async getTime(countryCode: string, cityName: string): Promise<string> {
+    public static async getTimeByCountryAndCity(countryCode: string, cityName: string): Promise<string> {
 
-        const minutes = Number(await TimeService.getTimeZoneOffsetDST(countryCode, cityName, true))
+        const entry = await TimeService.getTimeZoneEntry(countryCode, cityName)
+
+        return TimeService.getTimeByTimeZone(entry.timezone)
+    }
+
+    public static async getTimeByTimeZone(timeZone: string): Promise<string> {
+
+        const allTimeZones = JSON.parse(await Persistence.readFromLocalFile(`${Deno.cwd()}/timezones.json`))
+
+        const entry = allTimeZones.filter((e: any) => e.timezone === timeZone)[0]
+
+        let minutes
+        if (TimeService.isTimeZoneInDST(timeZone)) {
+            minutes = Number(TimeService.convertOffsetToMinutes(entry.dayLightSavingTimeOffset).toString())
+        } else {
+            minutes = Number(TimeService.convertOffsetToMinutes(entry.offset).toString())
+        }
+
         log.warning(minutes)
         let getDifferenceToUtcInMilisec = minutes * 60000;
         let getUTCMilisecond = new Date().getTime();
@@ -16,22 +33,8 @@ export class TimeService {
         return result.substr(11, 8)
     }
 
-    public static async getTimeByTimeZone(timeZone: string): Promise<string> {
-
-        const allTimeZones = JSON.parse(await Persistence.readFromLocalFile(`${Deno.cwd()}/timezones.json`))
-
-        const entry = allTimeZones.filter((e: any) => e.timezone === timeZone)[0]
-
-        const minutes = Number(TimeService.convertOffsetToMinutes(entry.dayLightSavingTimeOffset).toString())
-
-        log.warning(minutes)
-        let getDifferenceToUtcInMilisec = minutes * 60000;
-        let getUTCMilisecond = new Date().getTime();
-
-        const result = new Date(getUTCMilisecond - getDifferenceToUtcInMilisec).toISOString()
-
-
-        return result.substr(11, 8)
+    public static isTimeZoneInDST(timeZone: string): boolean {
+        return true // still figuring out a more sophisticated solution ;) 
     }
 
     public static async getTimeZone(countryCode: string, cityName: string): Promise<string> {
