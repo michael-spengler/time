@@ -1,5 +1,4 @@
 import { Persistence } from "https://deno.land/x/persistence@1.1.0/persistence.ts"
-// import { Time, timezone } from "./helper.ts";
 import * as log from "https://deno.land/std/log/mod.ts";
 
 export class TimeService {
@@ -11,7 +10,7 @@ export class TimeService {
         let getDifferenceToUtcInMilisec = minutes * 60000;
         let getUTCMilisecond = new Date().getTime();
 
-        const result = new Date(getUTCMilisecond - getDifferenceToUtcInMilisec).toISOString() //returns date based on server time
+        const result = new Date(getUTCMilisecond - getDifferenceToUtcInMilisec).toISOString()
 
 
         return result.substr(11, 8)
