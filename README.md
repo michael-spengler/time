@@ -1,5 +1,9 @@
 # Time
 
+Some features of this module might be obsolete as soon as the following issue is fixed:
+https://github.com/denoland/deno/issues/1968
+
+
 ## Usage Example
 
 ```ts
