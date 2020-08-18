@@ -3,6 +3,8 @@ import * as log from "https://deno.land/std/log/mod.ts";
 
 export class TimeService {
 
+    public static readonly pathToTimeZonesFile = 'https://raw.githubusercontent.com/michael-spengler/time/master/timezones.json'
+
     public static async getTimeByCountryAndCity(countryCode: string, cityName: string): Promise<string> {
 
         const entry = await TimeService.getTimeZoneEntry(countryCode, cityName)
@@ -12,7 +14,8 @@ export class TimeService {
 
     public static async getTimeByTimeZone(timeZone: string): Promise<string> {
 
-        const allTimeZones = JSON.parse(await Persistence.readFromLocalFile(`${Deno.cwd()}/timezones.json`))
+        // const allTimeZones = JSON.parse(await Persistence.readFromLocalFile(`${Deno.cwd()}/timezones.json`))
+        const allTimeZones = JSON.parse(await Persistence.readFromRemoteFile(TimeService.pathToTimeZonesFile))
 
         const entry = allTimeZones.filter((e: any) => e.timezone === timeZone)[0]
 
@@ -76,7 +79,8 @@ export class TimeService {
 
     private static async getTimeZoneEntry(countryCode: string, cityName: string): Promise<any> {
 
-        const allTimeZones = JSON.parse(await Persistence.readFromLocalFile(`${Deno.cwd()}/timezones.json`))
+        // const allTimeZones = JSON.parse(await Persistence.readFromLocalFile(`${Deno.cwd()}/timezones.json`))
+        const allTimeZones = JSON.parse(await Persistence.readFromRemoteFile(TimeService.pathToTimeZonesFile))
 
         const entry = allTimeZones.filter((e: any) => e.iso2 === countryCode && (e.city === cityName || e.city_ascii === cityName))[0]
         if (entry === undefined) {
