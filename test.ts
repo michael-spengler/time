@@ -3,6 +3,16 @@ import * as log from "https://deno.land/std/log/mod.ts";
 import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
 
 
+Deno.test("get time by offset", async (): Promise<void> => {
+    
+    const offset = '+02:00'
+
+    const time = await TimeService.getTimeByOffset(offset)
+
+    log.info(`The time for offset ${offset} is ${time}`)
+
+});
+
 Deno.test("get timezone", async (): Promise<void> => {
     
     const countryCode = 'DE'
