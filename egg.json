@@ -1,0 +1,10 @@
+{
+                                "name": "time",
+                                "description": "🦕       module for location based timezone provisioning etc. - alpha test phase.",
+                                "homepage": "https://github.com/michael-spengler/time",
+                                "files": [
+                                  "./**/*.ts",
+                                  "README.md"
+                                ],
+                                "entry": "./mod.ts"
+                              }
