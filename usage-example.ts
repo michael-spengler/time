@@ -4,11 +4,6 @@ import { TimeService } from "https://deno.land/x/time/mod.ts"
 const countryCode = "DE";
 const cityName = "Heidelberg";
 
-const time = await TimeService.getTimeByCountryAndCity(countryCode, cityName)
-log.info(`In ${cityName} (${countryCode}) it is ${time} o'Clock :)`)
-
 const timeZone = await TimeService.getTimeZone(countryCode, cityName)
 log.info(`The timezone of ${cityName} (${countryCode}) is ${timeZone}`)
 
-const timeByTimeZone = await TimeService.getTimeByTimeZone(timeZone)
-log.info(`In ${timeZone} it is ${timeByTimeZone} o'Clock :)`)
