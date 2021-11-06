@@ -5,24 +5,26 @@ fixed: https://github.com/denoland/deno/issues/1968
 
 ## Usage Example
 
+```sh
+
+deno run --allow-read --allow-net https://deno.land/x/time/usage-example.ts
+
+```
+
 ```ts
-import * as log from "https://deno.land/std/log/mod.ts";
-import { TimeService } from "https://deno.land/x/time";
+import * as log from "https://deno.land/std/log/mod.ts"
+import { TimeService } from "https://deno.land/x/time/mod.ts"
 
 const countryCode = "DE";
 const cityName = "Heidelberg";
 
-const time = await TimeService.getTimeByCountryAndCity(countryCode, cityName);
+const time = await TimeService.getTimeByCountryAndCity(countryCode, cityName)
+log.info(`In ${cityName} (${countryCode}) it is ${time} o'Clock :)`)
 
-log.info(`In ${cityName} (${countryCode}) it is ${time} o'Clock :)`);
-  
+const timeZone = await TimeService.getTimeZone(countryCode, cityName)
+log.info(`The timezone of ${cityName} (${countryCode}) is ${timeZone}`)
 
-const timeZone = await TimeService.getTimeZone(countryCode, cityName);
-
-log.info(`The timezone of ${cityName} (${countryCode}) is ${timeZone}`);
-  
-
-const timeByTimeZone = await TimeService.getTimeByTimeZone(timeZone);
+const timeByTimeZone = await TimeService.getTimeByTimeZone(timeZone)
 log.info(`In ${timeZone} it is ${timeByTimeZone} o'Clock :)`)
 
 ```
@@ -31,7 +33,7 @@ log.info(`In ${timeZone} it is ${timeByTimeZone} o'Clock :)`)
 
 ```sh
 
-deno test --allow-read https://deno.land/x/time/test.ts
+deno test --allow-read --allow-net https://deno.land/x/time/test.ts
   
 ```
 

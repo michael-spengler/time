@@ -1,14 +1,13 @@
 import { Persistence } from "https://deno.land/x/persistence@1.1.0/persistence.ts"
-import * as log from "https://deno.land/std/log/mod.ts";
 
 export class TimeService {
 
 
     public static async getAllTimeZoneEntries(): Promise<any[]> {
         const pathToTimeZonesFile = 'https://raw.githubusercontent.com/michael-spengler/time/master/timezones.json'
-        
+
         const allTimeZoneEntries = JSON.parse(await Persistence.readFromRemoteFile(pathToTimeZonesFile))
-        
+
         return allTimeZoneEntries
     }
 
@@ -33,7 +32,7 @@ export class TimeService {
 
     public static async getTimeByTimeZone(timeZone: string): Promise<string> {
 
-        const allTimeZones = await TimeService.getAllTimeZoneEntries() 
+        const allTimeZones = await TimeService.getAllTimeZoneEntries()
 
         const entry = allTimeZones.filter((e: any) => e.timezone === timeZone)[0]
 
@@ -87,7 +86,7 @@ export class TimeService {
 
     private static async getTimeZoneEntry(countryCode: string, cityName: string): Promise<any> {
 
-        const allTimeZones = await TimeService.getAllTimeZoneEntries() 
+        const allTimeZones = await TimeService.getAllTimeZoneEntries()
 
         const entry = allTimeZones.filter((e: any) => e.iso2 === countryCode && (e.city === cityName || e.city_ascii === cityName))[0]
         if (entry === undefined) {
