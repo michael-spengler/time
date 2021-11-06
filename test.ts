@@ -1,10 +1,10 @@
 import { TimeService } from './time-service.ts'
-import * as log from "https://deno.land/std/log/mod.ts";
-import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
+import * as log from "https://deno.land/std/log/mod.ts"
+import { assertEquals } from "https://deno.land/std/testing/asserts.ts"
 
 
 Deno.test("get time by offset", async (): Promise<void> => {
-    
+
     const offset = '+02:00'
 
     const time = await TimeService.getTimeByOffset(offset)
@@ -14,7 +14,7 @@ Deno.test("get time by offset", async (): Promise<void> => {
 });
 
 Deno.test("get timezone", async (): Promise<void> => {
-    
+
     const countryCode = 'DE'
     const cityName = 'Heidelberg'
 
@@ -26,32 +26,8 @@ Deno.test("get timezone", async (): Promise<void> => {
 });
 
 
-Deno.test("get time by country and city", async (): Promise<void> => {
-    
-    const countryCode = 'DE'
-    const cityName = 'Heidelberg'
-
-    const time = await TimeService.getTimeByCountryAndCity(countryCode, cityName)
-
-    log.info(`In ${cityName} (${countryCode}) it is ${time} o'Clock :)`)
-
-    assertEquals(time.length, 8)
-});
-
-Deno.test("get time by timezone", async (): Promise<void> => {
-    
-    const timeZone = 'Europe/Berlin'
-
-    const time = await TimeService.getTimeByTimeZone(timeZone)
-
-    log.info(`In ${timeZone} it is ${time} o'Clock :)`)
-
-    assertEquals(time.length, 8)
-});
-
-
 Deno.test("get offset", async (): Promise<void> => {
-    
+
     const countryCode = 'DE'
     const cityName = 'Heidelberg'
 
@@ -66,10 +42,10 @@ Deno.test("get offset", async (): Promise<void> => {
 
 
 Deno.test("get daylight saving time offset", async (): Promise<void> => {
-    
+
     const countryCode = 'DE'
     const cityName = 'Heidelberg'
-    
+
     const offsetDST = await TimeService.getTimeZoneOffsetDST(countryCode, cityName)
 
     log.info(`offsetDST: ${offsetDST}`)

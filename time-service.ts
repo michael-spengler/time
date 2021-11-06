@@ -2,20 +2,12 @@ import { Persistence } from "https://deno.land/x/persistence@1.1.0/persistence.t
 
 export class TimeService {
 
-
     public static async getAllTimeZoneEntries(): Promise<any[]> {
         const pathToTimeZonesFile = 'https://raw.githubusercontent.com/michael-spengler/time/master/timezones.json'
 
         const allTimeZoneEntries = JSON.parse(await Persistence.readFromRemoteFile(pathToTimeZonesFile))
 
         return allTimeZoneEntries
-    }
-
-    public static async getTimeByCountryAndCity(countryCode: string, cityName: string): Promise<string> {
-
-        const entry = await TimeService.getTimeZoneEntry(countryCode, cityName)
-
-        return TimeService.getTimeByTimeZone(entry.timezone)
     }
 
     public static getTimeByOffset(offset: string) {
@@ -30,22 +22,6 @@ export class TimeService {
         return result.substr(11, 8)
     }
 
-    public static async getTimeByTimeZone(timeZone: string): Promise<string> {
-
-        const allTimeZones = await TimeService.getAllTimeZoneEntries()
-
-        const entry = allTimeZones.filter((e: any) => e.timezone === timeZone)[0]
-
-        if (TimeService.isTimeZoneInDST(timeZone)) {
-            return TimeService.getTimeByOffset(entry.dayLightSavingTimeOffset)
-        } else {
-            return TimeService.getTimeByOffset(entry.offset)
-        }
-    }
-
-    public static isTimeZoneInDST(timeZone: string): boolean {
-        return true // still figuring out a more sophisticated solution ;) 
-    }
 
     public static async getTimeZone(countryCode: string, cityName: string): Promise<string> {
 

@@ -1,7 +1,9 @@
 # Time
 
-Some features of this module might be obsolete as soon as the following issue is
-fixed: https://github.com/denoland/deno/issues/1968
+Fortunately there is [ICU support](https://github.com/denoland/deno/issues/1968) since [Deno v1.8](https://deno.com/blog/v1.8#icu-support) came out. 
+So this module will evolve in providing different time related services in the future.  
+
+Contributions are welcome.   
 
 ## Usage Example
 
@@ -18,14 +20,8 @@ import { TimeService } from "https://deno.land/x/time/mod.ts"
 const countryCode = "DE";
 const cityName = "Heidelberg";
 
-const time = await TimeService.getTimeByCountryAndCity(countryCode, cityName)
-log.info(`In ${cityName} (${countryCode}) it is ${time} o'Clock :)`)
-
 const timeZone = await TimeService.getTimeZone(countryCode, cityName)
 log.info(`The timezone of ${cityName} (${countryCode}) is ${timeZone}`)
-
-const timeByTimeZone = await TimeService.getTimeByTimeZone(timeZone)
-log.info(`In ${timeZone} it is ${timeByTimeZone} o'Clock :)`)
 
 ```
 
